@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "notes-exporter-nats-publisher"
+version = "0.1.0"
+description = "NATS publisher for Apple Notes exported via notes-exporter"
+requires-python = ">=3.9"
+dependencies = [
+    "nats-py>=2.2.0",
+    "click>=8.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "black>=22.0.0",
+]
