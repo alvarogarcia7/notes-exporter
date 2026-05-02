@@ -14,6 +14,7 @@ import click
 from pathlib import Path
 
 import nats
+from date_extractor import format_message_with_date
 
 NATS_URL = os.environ.get("NATS_URL")
 if not NATS_URL:
@@ -82,9 +83,13 @@ async def publish_notes(data_dir: str):
                     "filename": json_file.name
                 }
 
+                # Add date field (with title override support)
+                message = format_message_with_date(message, note_data)
+
                 message_json = json.dumps(message)
                 await nc.publish(TOPIC, message_json.encode())
-                print(f"✓ Published {json_file.name} (note_id: {note_data.get('id', 'unknown')})")
+                date_str = f" (date: {message['date']})" if message.get('date') else ""
+                print(f"✓ Published {json_file.name} (note_id: {note_data.get('id', 'unknown')}){date_str}")
                 published_count += 1
             except json.JSONDecodeError as e:
                 print(f"✗ Failed to parse {json_file.name}: {e}")
