@@ -21,7 +21,7 @@ if not NATS_URL:
     print("Error: NATS_URL environment variable not set")
     sys.exit(1)
 CERTS_DIR = os.environ.get("CERTS_DIR", "/tmp/nats-certs")
-TOPIC = "messages.10.raw"
+TOPIC = "messages.10.raw.type.applenotes"
 
 
 def _make_ssl_ctx() -> ssl.SSLContext:
